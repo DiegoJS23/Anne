@@ -1,0 +1,48 @@
+SELECT (alias o tabla1).campo, (alias o tabla2).campo from tabla (alias1) INNER JOIN tabla (alias2) 
+ON alias1.campos relacionados tabla1 = alias2.campo relacionado tabla2
+
+SELECT c.id_estilista, e.email_e FROM cita c INNER JOIN estilista e ON c.id_estilista = e.id_estilista;
+
+SELECT c.id_cliente, ci.email_c FROM cita c INNER JOIN cliente ci ON c.id_cliente = ci.id_cliente;
+
+usar este para enviar correo al estilista
+SELECT e.email_e FROM cita c INNER JOIN estilista e ON c.id_estilista = e.id_estilista WHERE e.id_estilista = '';
+usar este para enviar correo al cliente 
+SELECT ci.email_c FROM cita c INNER JOIN cliente ci ON c.id_cliente = ci.id_cliente WHERE ci.id_cliente = '10203050';
+
+codigo para enviar email
+mail("email a donde va el correo","asunto","mensaje","Encabezado")
+
+PRUEBAS PARA VERIFICAR CREACION FK VARCHAR
+Create table if not exists T1 (
+	id Varchar(10) NOT NULL,
+	texto Varchar(255),
+ Primary Key (id)
+) ENGINE = InnoDB;
+ 
+Create table if not exists T2 (
+	id Varchar(10) NOT NULL,
+	t1_id Varchar(10) NOT NULL,
+	texto Varchar(255),
+ Primary Key (id),
+ Constraint R01 Foreign Key (t1_id) references T1 (id) on delete  CASCADE on update  CASCADE
+) ENGINE = InnoDB;
+
+
+PRUEBA DE BD PROYECTO
+Create table if not exists horario_cita (
+	id_estilista int(15) NOT NULL,
+	hora Varchar(10) NOT NULL,
+ Primary Key (id_estilista,hora),
+    Constraint R010 Foreign Key (id_estilista) references estilista (id_estilista) on delete CASCADE on update CASCADE
+) ENGINE = InnoDB;
+
+Create table if not exists cita ( 
+	id_cita int(10) NOT NULL,
+	id_cliente int(15) NOT NULL, 
+	id_estilista int(15) NOT NULL, 
+	hora Varchar(10) NOT NULL, 
+ Primary Key (id_cita), 
+	Constraint R01 Foreign Key (id_cliente) references cliente (id_cliente) on delete CASCADE on update CASCADE, 
+	Constraint R02 Foreign Key (id_estilista, hora) references horario_cita (id_estilista, hora) on delete CASCADE on update CASCADE 
+) ENGINE = InnoDB;

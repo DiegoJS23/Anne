@@ -1,0 +1,2 @@
+primero apagas el XAMPP, le das en config -> php.ini 
+en php.ini, buscas smtp y actualizas los datos, pones el email desde donde va a enviarse el correo y listo.
